@@ -1,7 +1,7 @@
 CURL=curl-7.50.2
 QRENCODE=qrencode-3.4.4
 LUA=lua-5.2.4
-WX=wxWidgets-3.0.2
+WX=wxWidgets-3.1.0
 HARU=RELEASE_2_3_0
 HARUDIR=libharu-$(HARU)
 ZLIB=zlib-1.2.8
@@ -18,14 +18,14 @@ ZLIBFILE=$(ZLIB).tar.gz
 CURLURL=http://curl.haxx.se/download/$(CURLFILE)
 QRENCODEURL=http://fukuchi.org/works/qrencode/$(QRENCODEFILE)
 LUAURL=http://www.lua.org/ftp/$(LUAFILE)
-WXURL=http://downloads.sourceforge.net/project/wxwindows/3.0.2/$(WXFILE)?r=\&ts=1431598906\&use_mirror=garr
+WXURL=https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.0/$(WXFILE)
 HARUURL=https://github.com/libharu/libharu/archive/$(HARUFILE)
 ZLIBURL=http://downloads.sourceforge.net/project/libpng/zlib/1.2.8/$(ZLIBFILE)?r=\&ts=1454597029\&use_mirror=vorboss
 
 CURLTARGET=$(ROOTFS)/lib/libcurl-4.dll
 QRENCODETARGET=$(ROOTFS)/lib/libqrencode.a
 LUATARGET=$(ROOTFS)/lib/lua52.dll
-WXTARGET=$(ROOTFS)/lib/wxmsw30u_core_gcc_custom.dll
+WXTARGET=$(ROOTFS)/lib/wxmsw310u_core_gcc_custom.dll
 HARUTARGET=$(ROOTFS)/lib/libhpdf.a
 ZLIBTARGET=$(ROOTFS)/lib/libz.a
 
@@ -56,7 +56,9 @@ LUACONFIG=\
 	MYLIBS=\
 	MYLDFLAGS=-s
 
-WXCONFIG=../configure\
+WXCONFIG=CPPFLAGS="-I${ROOTFS}/include"\
+	LDFLAGS="-L${ROOTFS}/lib"\
+	../configure\
 	--prefix=$(ROOTFS)\
 	--host=i686-w64-mingw32\
 	--build=i686-linux\
