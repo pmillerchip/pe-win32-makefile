@@ -20,7 +20,7 @@ QRENCODEURL=http://fukuchi.org/works/qrencode/$(QRENCODEFILE)
 LUAURL=http://www.lua.org/ftp/$(LUAFILE)
 WXURL=http://downloads.sourceforge.net/project/wxwindows/3.0.2/$(WXFILE)?r=\&ts=1431598906\&use_mirror=garr
 HARUURL=https://github.com/libharu/libharu/archive/$(HARUFILE)
-ZLIBURL= http://downloads.sourceforge.net/project/libpng/zlib/1.2.8/$(ZLIBFILE)?r=\&ts=1454597029\&use_mirror=vorboss
+ZLIBURL=http://downloads.sourceforge.net/project/libpng/zlib/1.2.8/$(ZLIBFILE)?r=\&ts=1454597029\&use_mirror=vorboss
 
 CURLTARGET=$(ROOTFS)/lib/libcurl-4.dll
 QRENCODETARGET=$(ROOTFS)/lib/libqrencode.a
@@ -70,13 +70,13 @@ HARUCONFIG=./buildconf.sh --force && ./configure\
 	--with-zlib=$(ROOTFS)
 
 ZLIBCONFIG=CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar\
-    RANLIB=i686-w64-mingw32-ranlib\
-    LDSHAREDLIBC=\
-    STATICLIB=libz.a\
-    SHAREDLIB=zlib1.dll\
-    IMPLIB=libz.dll.a\
-    ./configure\
-    --prefix=$(ROOTFS)
+	RANLIB=i686-w64-mingw32-ranlib\
+	LDSHAREDLIBC=\
+	STATICLIB=libz.a\
+	SHAREDLIB=zlib1.dll\
+	IMPLIB=libz.dll.a\
+	./configure\
+	--prefix=$(ROOTFS)
 
 all: $(CURLTARGET) $(QRENCODETARGET) $(LUATARGET) $(HARUTARGET) $(WXTARGET)
 	echo Done
