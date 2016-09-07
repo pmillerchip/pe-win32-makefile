@@ -82,13 +82,13 @@ all: $(CURLTARGET) $(QRENCODETARGET) $(LUATARGET) $(HARUTARGET) $(WXTARGET)
 	echo Done
 
 $(CURLFILE):
-	wget $(CURLURL)
+	wget -O $@ $(CURLURL)
 
 $(QRENCODEFILE):
-	wget $(QRENCODEURL)
+	wget -O $@ $(QRENCODEURL)
 
 $(LUAFILE):
-	wget $(LUAURL)
+	wget -O $@ $(LUAURL)
 
 $(WXFILE):
 	wget -O $@ $(WXURL)
