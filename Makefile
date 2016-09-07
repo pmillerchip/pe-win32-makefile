@@ -29,7 +29,9 @@ WXTARGET=$(ROOTFS)/lib/wxmsw30u_core_gcc_custom.dll
 HARUTARGET=$(ROOTFS)/lib/libhpdf.a
 ZLIBTARGET=$(ROOTFS)/lib/libz.a
 
-CURLCONFIG=./configure\
+CURLCONFIG=CPPFLAGS="-I${ROOTFS}/include"\
+	LDFLAGS="-L${ROOTFS}/lib"\
+	./configure\
 	--prefix=$(ROOTFS)\
 	--host=i686-w64-mingw32\
 	--enable-ipv6\
