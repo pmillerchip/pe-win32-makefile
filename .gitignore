@@ -1,0 +1,10 @@
+*.zip
+*.bz2
+*.gz
+rootfs/
+lua-*/
+curl-*/
+libharu-*/
+qrencode-*/
+wxWidgets-*/
+zlib-*/
