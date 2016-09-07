@@ -1,4 +1,4 @@
-CURL=curl-7.47.1
+CURL=curl-7.50.2
 QRENCODE=qrencode-3.4.4
 LUA=lua-5.2.4
 WX=wxWidgets-3.0.2
