@@ -77,7 +77,7 @@ WXCONFIG=CPPFLAGS="-I${ROOTFS}/include"\
 HARUCONFIG=./buildconf.sh --force && ./configure\
 	--prefix=$(ROOTFS)\
 	--host=i686-w64-mingw32\
-	--without-png\
+	--with-png=$(ROOTFS)\
 	--with-zlib=$(ROOTFS)
 
 ZLIBCONFIG=CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar\
@@ -163,7 +163,7 @@ $(ZLIBTARGET): $(ZLIBFILE)
 	(cd $(ZLIB); $(ZLIBCONFIG) )
 	$(MAKE) -C $(ZLIB) install
 
-$(HARUTARGET): $(HARUFILE) $(ZLIBTARGET)
+$(HARUTARGET): $(HARUFILE) $(PNGTARGET)
 	rm -rf $(HARUDIR)
 	unzip $(HARUFILE)
 	(cd $(HARUDIR); $(HARUCONFIG) )
