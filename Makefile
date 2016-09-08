@@ -133,7 +133,7 @@ $(LUATARGET): $(LUAFILE)
 	cp $(LUA)/src/lua.hpp $(ROOTFS)/include
 	cp $(LUA)/src/lua52.dll $(ROOTFS)/lib
 
-$(WXTARGET): $(WXFILE)
+$(WXTARGET): $(WXFILE) $(ZLIBTARGET)
 	rm -rf $(WX)
 	tar -xf $(WXFILE)
 	mkdir $(WX)/build_win32
