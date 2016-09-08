@@ -1,10 +1,12 @@
 CURL=curl-7.50.2
 QRENCODE=qrencode-3.4.4
 LUA=lua-5.2.4
-WX=wxWidgets-3.1.0
+WXVERSION=3.1.0
+WX=wxWidgets-$(WXVERSION)
 HARU=RELEASE_2_3_0
 HARUDIR=libharu-$(HARU)
-ZLIB=zlib-1.2.8
+ZLIBVERSION=1.2.8
+ZLIB=zlib-$(ZLIBVERSION)
 
 ROOTFS=$(PWD)/rootfs
 
@@ -18,9 +20,9 @@ ZLIBFILE=$(ZLIB).tar.gz
 CURLURL=http://curl.haxx.se/download/$(CURLFILE)
 QRENCODEURL=http://fukuchi.org/works/qrencode/$(QRENCODEFILE)
 LUAURL=http://www.lua.org/ftp/$(LUAFILE)
-WXURL=https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.0/$(WXFILE)
+WXURL=https://github.com/wxWidgets/wxWidgets/releases/download/v$(WXVERSION)/$(WXFILE)
 HARUURL=https://github.com/libharu/libharu/archive/$(HARUFILE)
-ZLIBURL=http://downloads.sourceforge.net/project/libpng/zlib/1.2.8/$(ZLIBFILE)?r=\&ts=1454597029\&use_mirror=vorboss
+ZLIBURL=http://downloads.sourceforge.net/project/libpng/zlib/$(ZLIBVERSION)/$(ZLIBFILE)?r=\&ts=1454597029\&use_mirror=vorboss
 
 CURLTARGET=$(ROOTFS)/lib/libcurl-4.dll
 QRENCODETARGET=$(ROOTFS)/lib/libqrencode.a
