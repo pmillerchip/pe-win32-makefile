@@ -7,6 +7,8 @@ HARU=RELEASE_2_3_0
 HARUDIR=libharu-$(HARU)
 ZLIBVERSION=1.2.8
 ZLIB=zlib-$(ZLIBVERSION)
+PNGVERSION=1.6.25
+PNG=libpng-$(PNGVERSION)
 
 ROOTFS=$(PWD)/rootfs
 
@@ -16,6 +18,7 @@ LUAFILE=$(LUA).tar.gz
 WXFILE=$(WX).tar.bz2
 HARUFILE=$(HARU).zip
 ZLIBFILE=$(ZLIB).tar.gz
+PNGFILE=$(PNG).tar.gz
 
 CURLURL=http://curl.haxx.se/download/$(CURLFILE)
 QRENCODEURL=http://fukuchi.org/works/qrencode/$(QRENCODEFILE)
@@ -23,6 +26,7 @@ LUAURL=http://www.lua.org/ftp/$(LUAFILE)
 WXURL=https://github.com/wxWidgets/wxWidgets/releases/download/v$(WXVERSION)/$(WXFILE)
 HARUURL=https://github.com/libharu/libharu/archive/$(HARUFILE)
 ZLIBURL=http://downloads.sourceforge.net/project/libpng/zlib/$(ZLIBVERSION)/$(ZLIBFILE)?r=\&ts=1454597029\&use_mirror=vorboss
+PNGURL=http://downloads.sourceforge.net/project/libpng/libpng16/$(PNGVERSION)/$(PNGFILE)?r=\&ts=1473331135\&use_mirror=netix
 
 CURLTARGET=$(ROOTFS)/lib/libcurl-4.dll
 QRENCODETARGET=$(ROOTFS)/lib/libqrencode.a
@@ -30,6 +34,7 @@ LUATARGET=$(ROOTFS)/lib/lua52.dll
 WXTARGET=$(ROOTFS)/lib/wxmsw310u_core_gcc_custom.dll
 HARUTARGET=$(ROOTFS)/lib/libhpdf.a
 ZLIBTARGET=$(ROOTFS)/lib/libz.a
+PNGTARGET=$(ROOTFS)/lib/libpng.a
 
 CURLCONFIG=CPPFLAGS="-I${ROOTFS}/include"\
 	LDFLAGS="-L${ROOTFS}/lib"\
@@ -84,7 +89,13 @@ ZLIBCONFIG=CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar\
 	./configure\
 	--prefix=$(ROOTFS)
 
-all: $(CURLTARGET) $(QRENCODETARGET) $(LUATARGET) $(HARUTARGET) $(WXTARGET)
+PNGCONFIG=CPPFLAGS="-I${ROOTFS}/include"\
+	LDFLAGS="-L${ROOTFS}/lib"\
+	./configure\
+	--prefix=$(ROOTFS)\
+	--host=i686-w64-mingw32
+
+all: $(CURLTARGET) $(QRENCODETARGET) $(LUATARGET) $(HARUTARGET) $(WXTARGET) $(PNGTARGET)
 	echo Done
 
 $(CURLFILE):
@@ -104,6 +115,9 @@ $(HARUFILE):
 
 $(ZLIBFILE):
 	wget -O $@ $(ZLIBURL)
+
+$(PNGFILE):
+	wget -O $@ $(PNGURL)
 
 $(CURLTARGET): $(CURLFILE) $(ZLIBTARGET)
 	rm -rf $(CURL)
@@ -135,7 +149,7 @@ $(LUATARGET): $(LUAFILE)
 	cp $(LUA)/src/lua.hpp $(ROOTFS)/include
 	cp $(LUA)/src/lua52.dll $(ROOTFS)/lib
 
-$(WXTARGET): $(WXFILE) $(ZLIBTARGET)
+$(WXTARGET): $(WXFILE) $(PNGTARGET)
 	rm -rf $(WX)
 	tar -xf $(WXFILE)
 	mkdir $(WX)/build_win32
@@ -156,6 +170,13 @@ $(HARUTARGET): $(HARUFILE) $(ZLIBTARGET)
 	$(MAKE) -C $(HARUDIR)
 	$(MAKE) -C $(HARUDIR) install
 
+$(PNGTARGET): $(PNGFILE) $(ZLIBTARGET)
+	rm -rf $(PNG)
+	tar -xf $(PNGFILE)
+	(cd $(PNG); $(PNGCONFIG) )
+	$(MAKE) -C $(PNG)
+	$(MAKE) -C $(PNG) install
+
 clean:
 	rm -rf $(CURL)
 	rm -rf $(QRENCODE)
@@ -163,6 +184,7 @@ clean:
 	rm -rf $(WX)
 	rm -rf $(HARUDIR)
 	rm -rf $(ZLIB)
+	rm -rf $(PNG)
 	rm -rf $(ROOTFS)
 	mkdir -p $(ROOTFS)
 	mkdir -p $(ROOTFS)/include
