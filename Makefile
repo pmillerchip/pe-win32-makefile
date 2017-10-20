@@ -1,5 +1,5 @@
-CURL=curl-7.50.2
-QRENCODE=qrencode-3.4.4
+CURL=curl-7.56.0
+QRENCODE=qrencode-4.0.0
 LUA=lua-5.2.4
 WXVERSION=3.1.0
 WX=wxWidgets-$(WXVERSION)
