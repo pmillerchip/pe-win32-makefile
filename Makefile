@@ -137,6 +137,7 @@ $(QRENCODETARGET): $(QRENCODEFILE) $(PNGTARGET)
 	(cd $(QRENCODE); $(QRENCODECONFIG) )
 	$(MAKE) -C $(QRENCODE)
 	$(MAKE) -C $(QRENCODE) install
+	cp $(QRENCODE)/.libs/libqrencode.dll $(ROOTFS)/lib
 
 $(LUATARGET): $(LUAFILE)
 	rm -rf $(LUA)
@@ -176,6 +177,7 @@ $(PNGTARGET): $(PNGFILE) $(ZLIBTARGET)
 	(cd $(PNG); $(PNGCONFIG) )
 	$(MAKE) -C $(PNG)
 	$(MAKE) -C $(PNG) install
+	cp $(PNG)/.libs/libpng16-16.dll $(ROOTFS)/lib
 
 clean:
 	rm -rf $(CURL)
